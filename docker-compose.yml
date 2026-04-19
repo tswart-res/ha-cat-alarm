@@ -1,0 +1,45 @@
+# For Raspberry Pi deployment, replace the ports: sections with network_mode: host
+# on both services. Host networking is required for mDNS/Zeroconf device discovery
+# on a local LAN (TP-Link Tapo hub, Alexa, etc.).
+
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - "8123:8123"
+    volumes:
+      - ./homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    environment:
+      - TZ=${TZ:-Europe/London}
+    healthcheck:
+      test: ["CMD", "curl", "-s", "http://localhost:8123/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  appdaemon:
+    image: acockburn/appdaemon:latest
+    container_name: appdaemon
+    restart: unless-stopped
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./appdaemon:/conf
+    environment:
+      - TZ=${TZ:-Europe/London}
+      - HA_TOKEN=${HA_TOKEN}
+    depends_on:
+      homeassistant:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5050/api/appdaemon/state"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s

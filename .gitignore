@@ -1,0 +1,43 @@
+# Secrets and environment
+.env
+homeassistant/secrets.yaml
+appdaemon/secrets.yaml
+
+# Home Assistant generated files and databases
+homeassistant/.storage/
+homeassistant/.cloud/
+homeassistant/.cache/
+homeassistant/.HA_VERSION
+homeassistant/*.lock
+homeassistant/home-assistant_v2.db
+homeassistant/home-assistant_v2.db-shm
+homeassistant/home-assistant_v2.db-wal
+homeassistant/*.log
+homeassistant/*.log.*
+homeassistant/blueprints/
+
+# IDE / tool config
+.specstory/
+
+# HACS custom components (downloaded, gitignored; installed via UI)
+homeassistant/custom_components/
+
+# AppDaemon logs
+appdaemon/logs/*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride

@@ -1,0 +1,29 @@
+homeassistant:
+  name: !secret ha_name
+  latitude: !secret ha_latitude
+  longitude: !secret ha_longitude
+  elevation: !secret ha_elevation
+  unit_system: metric
+  currency: GBP
+  time_zone: !secret ha_timezone
+
+default_config:
+
+automation: !include automations.yaml
+
+recorder:
+  purge_keep_days: 7
+  exclude:
+    domains:
+      - weather
+      - sun
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.tplink: info
+    homeassistant.components.alexa: info
+
+# Telegram integration is UI-only in modern Home Assistant versions
+# Set it up via: Settings > Devices & Services > Add Integration > Telegram
+# For now, left commented out so HA can start cleanly

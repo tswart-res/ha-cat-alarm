@@ -1,0 +1,19 @@
+cat_alarm:
+  module: cat_alarm
+  class: CatAlarm
+
+  # Entity IDs loaded from appdaemon/secrets.yaml (gitignored).
+  # Copy appdaemon/secrets.yaml.example to appdaemon/secrets.yaml and fill in.
+  door_sensor: !secret door_sensor
+  alexa_announce_service: !secret alexa_announce_service
+  # telegram_notify_service: !secret telegram_notify_service  # uncomment after Telegram setup
+
+  # Timing (seconds)
+  initial_delay: 20
+  repeat_interval: 20
+
+  # Warning message (use {duration} for elapsed seconds)
+  warning_message: "Warning: Front Door has been open for {duration} seconds. Beware of the cats."
+
+  # Telegram message (use {duration} for elapsed seconds)
+  telegram_message: "FRONT DOOR HAS BEEN OPEN FOR {duration} SECONDS"
